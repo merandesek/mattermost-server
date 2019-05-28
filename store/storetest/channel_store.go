@@ -1945,8 +1945,8 @@ func testChannelStoreSearchMore(t *testing.T, ss store.Store) {
 
 	o6 := model.Channel{
 		TeamId:      teamId,
-		DisplayName: "Off-Topic",
-		Name:        "off-topic",
+		DisplayName: "general",
+		Name:        "general",
 		Type:        model.CHANNEL_OPEN,
 	}
 	store.Must(ss.Channel().Save(&o6, -1))
@@ -2005,8 +2005,8 @@ func testChannelStoreSearchMore(t *testing.T, ss store.Store) {
 		require.Equal(t, &model.ChannelList{&o7, &o6}, result.Data.(*model.ChannelList))
 	})
 
-	t.Run("one channel matching 'off-topic'", func(t *testing.T) {
-		result := <-ss.Channel().SearchMore(m1.UserId, teamId, "off-topic")
+	t.Run("one channel matching 'general'", func(t *testing.T) {
+		result := <-ss.Channel().SearchMore(m1.UserId, teamId, "general")
 		require.Nil(t, result.Err)
 		require.Equal(t, &model.ChannelList{&o6}, result.Data.(*model.ChannelList))
 	})
@@ -2099,8 +2099,8 @@ func testChannelStoreSearchInTeam(t *testing.T, ss store.Store) {
 
 	o6 := model.Channel{
 		TeamId:      teamId,
-		DisplayName: "Off-Topic",
-		Name:        "off-topic",
+		DisplayName: "general",
+		Name:        "general",
 		Type:        model.CHANNEL_OPEN,
 	}
 	store.Must(ss.Channel().Save(&o6, -1))
@@ -2123,8 +2123,8 @@ func testChannelStoreSearchInTeam(t *testing.T, ss store.Store) {
 
 	o9 := model.Channel{
 		TeamId:      teamId,
-		DisplayName: "Town Square",
-		Name:        "town-square",
+		DisplayName: "P2C",
+		Name:        "p2c",
 		Type:        model.CHANNEL_OPEN,
 	}
 	store.Must(ss.Channel().Save(&o9, -1))
@@ -2178,12 +2178,12 @@ func testChannelStoreSearchInTeam(t *testing.T, ss store.Store) {
 		{"empty string", teamId, "", false, &model.ChannelList{&o1, &o3, &o12, &o11, &o7, &o6, &o10, &o9}},
 		{"no matches", teamId, "blargh", false, &model.ChannelList{}},
 		{"prefix", teamId, "off-", false, &model.ChannelList{&o7, &o6}},
-		{"full match with dash", teamId, "off-topic", false, &model.ChannelList{&o6}},
-		{"town square", teamId, "town square", false, &model.ChannelList{&o9}},
+		{"full match with dash", teamId, "general", false, &model.ChannelList{&o6}},
+		{"P2C", teamId, "P2C", false, &model.ChannelList{&o9}},
 		{"the in name", teamId, "the", false, &model.ChannelList{&o10}},
 		{"Mobile", teamId, "Mobile", false, &model.ChannelList{&o11}},
 		{"search purpose", teamId, "now searchable", false, &model.ChannelList{&o12}},
-		{"pipe ignored", teamId, "town square |", false, &model.ChannelList{&o9}},
+		{"pipe ignored", teamId, "P2C |", false, &model.ChannelList{&o9}},
 	}
 
 	for name, search := range map[string]func(teamId string, term string, includeDeleted bool) store.StoreChannel{
@@ -2288,8 +2288,8 @@ func testChannelStoreSearchAllChannels(t *testing.T, ss store.Store) {
 
 	o6 := model.Channel{
 		TeamId:      t1.Id,
-		DisplayName: "Off-Topic",
-		Name:        "off-topic",
+		DisplayName: "general",
+		Name:        "general",
 		Type:        model.CHANNEL_OPEN,
 	}
 	store.Must(ss.Channel().Save(&o6, -1))
@@ -2312,8 +2312,8 @@ func testChannelStoreSearchAllChannels(t *testing.T, ss store.Store) {
 
 	o9 := model.Channel{
 		TeamId:      t1.Id,
-		DisplayName: "Town Square",
-		Name:        "town-square",
+		DisplayName: "P2C",
+		Name:        "p2c",
 		Type:        model.CHANNEL_OPEN,
 	}
 	store.Must(ss.Channel().Save(&o9, -1))
@@ -2365,12 +2365,12 @@ func testChannelStoreSearchAllChannels(t *testing.T, ss store.Store) {
 		{"empty string", "", false, &model.ChannelList{&o1, &o2, &o3, &o4, &o5, &o12, &o11, &o8, &o7, &o6, &o10, &o9}},
 		{"no matches", "blargh", false, &model.ChannelList{}},
 		{"prefix", "off-", false, &model.ChannelList{&o8, &o7, &o6}},
-		{"full match with dash", "off-topic", false, &model.ChannelList{&o6}},
-		{"town square", "town square", false, &model.ChannelList{&o9}},
+		{"full match with dash", "general", false, &model.ChannelList{&o6}},
+		{"P2C", "P2C", false, &model.ChannelList{&o9}},
 		{"the in name", "the", false, &model.ChannelList{&o10}},
 		{"Mobile", "Mobile", false, &model.ChannelList{&o11}},
 		{"search purpose", "now searchable", false, &model.ChannelList{&o12}},
-		{"pipe ignored", "town square |", false, &model.ChannelList{&o9}},
+		{"pipe ignored", "P2C |", false, &model.ChannelList{&o9}},
 	}
 
 	for _, testCase := range testCases {

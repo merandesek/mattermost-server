@@ -65,7 +65,7 @@ const (
 	// Deprecated
 	IMAGE_THUMBNAIL_PIXEL_WIDTH  = 120
 	IMAGE_THUMBNAIL_PIXEL_HEIGHT = 100
-	IMAGE_PREVIEW_PIXEL_WIDTH    = 1920
+	IMAGE_PREVIEW_PIXEL_WIDTH    = 5000
 )
 
 func (a *App) FileBackend() (filesstore.FileBackend, *model.AppError) {

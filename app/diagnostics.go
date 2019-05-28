@@ -323,8 +323,8 @@ func (a *App) trackConfig() {
 		"restrict_private_channel_manage_members":   *cfg.TeamSettings.DEPRECATED_DO_NOT_USE_RestrictPrivateChannelManageMembers,
 		"enable_X_to_leave_channels_from_LHS":       *cfg.TeamSettings.EnableXToLeaveChannelsFromLHS,
 		"experimental_enable_automatic_replies":     *cfg.TeamSettings.ExperimentalEnableAutomaticReplies,
-		"experimental_town_square_is_hidden_in_lhs": *cfg.TeamSettings.ExperimentalHideTownSquareinLHS,
-		"experimental_town_square_is_read_only":     *cfg.TeamSettings.ExperimentalTownSquareIsReadOnly,
+		"experimental_town_square_is_hidden_in_lhs": *cfg.TeamSettings.ExperimentalHidep2cinLHS,
+		"experimental_town_square_is_read_only":     *cfg.TeamSettings.Experimentalp2cIsReadOnly,
 		"experimental_primary_team":                 isDefault(*cfg.TeamSettings.ExperimentalPrimaryTeam, ""),
 		"experimental_default_channels":             len(cfg.TeamSettings.ExperimentalDefaultChannels),
 	})

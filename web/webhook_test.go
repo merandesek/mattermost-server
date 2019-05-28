@@ -99,7 +99,7 @@ func TestIncomingWebhook(t *testing.T) {
 
 	t.Run("WebhookExperimentalReadOnly", func(t *testing.T) {
 		th.App.SetLicense(model.NewTestLicense())
-		th.App.UpdateConfig(func(cfg *model.Config) { *cfg.TeamSettings.ExperimentalTownSquareIsReadOnly = true })
+		th.App.UpdateConfig(func(cfg *model.Config) { *cfg.TeamSettings.Experimentalp2cIsReadOnly = true })
 
 		// Read only default channel should fail.
 		resp, err := http.Post(url, "application/json", strings.NewReader(fmt.Sprintf("{\"text\":\"this is a test\", \"channel\":\"%s\"}", model.DEFAULT_CHANNEL)))
@@ -120,7 +120,7 @@ func TestIncomingWebhook(t *testing.T) {
 		require.Nil(t, err)
 		assert.True(t, resp.StatusCode == http.StatusOK)
 
-		th.App.UpdateConfig(func(cfg *model.Config) { *cfg.TeamSettings.ExperimentalTownSquareIsReadOnly = false })
+		th.App.UpdateConfig(func(cfg *model.Config) { *cfg.TeamSettings.Experimentalp2cIsReadOnly = false })
 	})
 
 	t.Run("WebhookAttachments", func(t *testing.T) {

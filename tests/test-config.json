@@ -57,7 +57,6 @@
         "ClusterLogTimeoutMilliseconds": 2000,
         "CloseUnusedDirectMessages": false,
         "EnablePreviewFeatures": true,
-        "EnableTutorial": true,
         "ExperimentalEnableDefaultChannelLeaveJoinMessages": true,
         "ExperimentalGroupUnreadChannels": "disabled",
         "ImageProxyType": "",
@@ -94,8 +93,8 @@
         "EnableConfirmNotificationsToChannel": true,
         "TeammateNameDisplay": "username",
         "ExperimentalEnableAutomaticReplies": false,
-        "ExperimentalHideTownSquareinLHS": false,
-        "ExperimentalTownSquareIsReadOnly": false,
+        "ExperimentalHidep2cinLHS": false,
+        "Experimentalp2cIsReadOnly": false,
         "ExperimentalPrimaryTeam": ""
     },
     "ClientRequirements": {

@@ -87,8 +87,8 @@ func GenerateClientConfig(c *model.Config, diagnosticId string, license *model.L
 	props["EnableEmailInvitations"] = strconv.FormatBool(*c.ServiceSettings.EnableEmailInvitations)
 
 	// Set default values for all options that require a license.
-	props["ExperimentalHideTownSquareinLHS"] = "false"
-	props["ExperimentalTownSquareIsReadOnly"] = "false"
+	props["ExperimentalHidep2cinLHS"] = "false"
+	props["Experimentalp2cIsReadOnly"] = "false"
 	props["ExperimentalEnableAuthenticationTransfer"] = "true"
 	props["LdapNicknameAttributeSet"] = "false"
 	props["LdapFirstNameAttributeSet"] = "false"
@@ -127,8 +127,8 @@ func GenerateClientConfig(c *model.Config, diagnosticId string, license *model.L
 	props["CustomUrlSchemes"] = strings.Join(c.DisplaySettings.CustomUrlSchemes, ",")
 
 	if license != nil {
-		props["ExperimentalHideTownSquareinLHS"] = strconv.FormatBool(*c.TeamSettings.ExperimentalHideTownSquareinLHS)
-		props["ExperimentalTownSquareIsReadOnly"] = strconv.FormatBool(*c.TeamSettings.ExperimentalTownSquareIsReadOnly)
+		props["ExperimentalHidep2cinLHS"] = strconv.FormatBool(*c.TeamSettings.ExperimentalHidep2cinLHS)
+		props["Experimentalp2cIsReadOnly"] = strconv.FormatBool(*c.TeamSettings.Experimentalp2cIsReadOnly)
 		props["ExperimentalEnableAuthenticationTransfer"] = strconv.FormatBool(*c.ServiceSettings.ExperimentalEnableAuthenticationTransfer)
 
 		if *license.Features.LDAP {

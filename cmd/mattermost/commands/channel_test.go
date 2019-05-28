@@ -85,7 +85,7 @@ func TestListChannels(t *testing.T) {
 
 	output := th.CheckCommand(t, "channel", "list", th.BasicTeam.Name)
 
-	if !strings.Contains(string(output), "town-square") {
+	if !strings.Contains(string(output), "p2c") {
 		t.Fatal("should have channels")
 	}
 

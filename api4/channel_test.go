@@ -2273,15 +2273,15 @@ func TestAutocompleteChannels(t *testing.T) {
 
 	// A private channel to make sure private channels are not used
 	utils.DisableDebugLogForTest()
-	ptown, _ := th.Client.CreateChannel(&model.Channel{
-		DisplayName: "Town",
-		Name:        "town",
+	pP2C, _ := th.Client.CreateChannel(&model.Channel{
+		DisplayName: "P2C",
+		Name:        "P2C",
 		Type:        model.CHANNEL_PRIVATE,
 		TeamId:      th.BasicTeam.Id,
 	})
 	utils.EnableDebugLogForTest()
 	defer func() {
-		th.Client.DeleteChannel(ptown.Id)
+		th.Client.DeleteChannel(pP2C.Id)
 	}()
 
 	for _, tc := range []struct {
@@ -2292,25 +2292,25 @@ func TestAutocompleteChannels(t *testing.T) {
 		expectedExcludes []string
 	}{
 		{
-			"Basic town-square",
+			"Basic p2c",
 			th.BasicTeam.Id,
-			"town",
-			[]string{"town-square"},
-			[]string{"off-topic", "town"},
+			"P2C",
+			[]string{"p2c"},
+			[]string{"general", "P2C"},
 		},
 		{
-			"Basic off-topic",
+			"Basic general",
 			th.BasicTeam.Id,
 			"off-to",
-			[]string{"off-topic"},
-			[]string{"town-square", "town"},
+			[]string{"general"},
+			[]string{"p2c", "P2C"},
 		},
 		{
-			"Basic town square and off topic",
+			"Basic P2C and general",
 			th.BasicTeam.Id,
 			"to",
-			[]string{"off-topic", "town-square"},
-			[]string{"town"},
+			[]string{"general", "p2c"},
+			[]string{"P2C"},
 		},
 	} {
 		t.Run(tc.description, func(t *testing.T) {
@@ -2355,18 +2355,18 @@ func TestAutocompleteChannelsForSearch(t *testing.T) {
 
 	// A private channel to make sure private channels are not used
 	utils.DisableDebugLogForTest()
-	ptown, _ := th.SystemAdminClient.CreateChannel(&model.Channel{
-		DisplayName: "Town",
-		Name:        "town",
+	pP2C, _ := th.SystemAdminClient.CreateChannel(&model.Channel{
+		DisplayName: "P2C",
+		Name:        "P2C",
 		Type:        model.CHANNEL_PRIVATE,
 		TeamId:      th.BasicTeam.Id,
 	})
 	defer func() {
-		th.Client.DeleteChannel(ptown.Id)
+		th.Client.DeleteChannel(pP2C.Id)
 	}()
 	mypriv, _ := th.Client.CreateChannel(&model.Channel{
-		DisplayName: "My private town",
-		Name:        "townpriv",
+		DisplayName: "My private P2C",
+		Name:        "P2Cpriv",
 		Type:        model.CHANNEL_PRIVATE,
 		TeamId:      th.BasicTeam.Id,
 	})
@@ -2407,25 +2407,25 @@ func TestAutocompleteChannelsForSearch(t *testing.T) {
 		expectedExcludes []string
 	}{
 		{
-			"Basic town-square",
+			"Basic p2c",
 			th.BasicTeam.Id,
-			"town",
-			[]string{"town-square", "townpriv"},
-			[]string{"off-topic", "town"},
+			"P2C",
+			[]string{"p2c", "P2Cpriv"},
+			[]string{"general", "P2C"},
 		},
 		{
-			"Basic off-topic",
+			"Basic general",
 			th.BasicTeam.Id,
 			"off-to",
-			[]string{"off-topic"},
-			[]string{"town-square", "town", "townpriv"},
+			[]string{"general"},
+			[]string{"p2c", "P2C", "P2Cpriv"},
 		},
 		{
-			"Basic town square and off topic",
+			"Basic P2C and general",
 			th.BasicTeam.Id,
 			"to",
-			[]string{"off-topic", "town-square", "townpriv"},
-			[]string{"town"},
+			[]string{"general", "p2c", "P2Cpriv"},
+			[]string{"P2C"},
 		},
 		{
 			"Direct and group messages",

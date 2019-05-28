@@ -50,6 +50,7 @@ type App struct {
 
 func New(options ...AppOption) *App {
 	app := &App{}
+	fmt.Println("Are we in here?")
 
 	for _, option := range options {
 		option(app)

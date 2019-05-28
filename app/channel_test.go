@@ -157,25 +157,25 @@ func TestMoveChannel(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func TestJoinDefaultChannelsCreatesChannelMemberHistoryRecordTownSquare(t *testing.T) {
+func TestJoinDefaultChannelsCreatesChannelMemberHistoryRecordp2c(t *testing.T) {
 	th := Setup(t).InitBasic()
 	defer th.TearDown()
 
-	// figure out the initial number of users in town square
-	townSquareChannelId := store.Must(th.App.Srv.Store.Channel().GetByName(th.BasicTeam.Id, "town-square", true)).(*model.Channel).Id
-	initialNumTownSquareUsers := len(store.Must(th.App.Srv.Store.ChannelMemberHistory().GetUsersInChannelDuring(model.GetMillis()-100, model.GetMillis()+100, townSquareChannelId)).([]*model.ChannelMemberHistoryResult))
+	// figure out the initial number of users in P2C
+	p2cChannelId := store.Must(th.App.Srv.Store.Channel().GetByName(th.BasicTeam.Id, "p2c", true)).(*model.Channel).Id
+	initialNump2cUsers := len(store.Must(th.App.Srv.Store.ChannelMemberHistory().GetUsersInChannelDuring(model.GetMillis()-100, model.GetMillis()+100, p2cChannelId)).([]*model.ChannelMemberHistoryResult))
 
 	// create a new user that joins the default channels
 	user := th.CreateUser()
 	th.App.JoinDefaultChannels(th.BasicTeam.Id, user, false, "")
 
 	// there should be a ChannelMemberHistory record for the user
-	histories := store.Must(th.App.Srv.Store.ChannelMemberHistory().GetUsersInChannelDuring(model.GetMillis()-100, model.GetMillis()+100, townSquareChannelId)).([]*model.ChannelMemberHistoryResult)
-	assert.Len(t, histories, initialNumTownSquareUsers+1)
+	histories := store.Must(th.App.Srv.Store.ChannelMemberHistory().GetUsersInChannelDuring(model.GetMillis()-100, model.GetMillis()+100, p2cChannelId)).([]*model.ChannelMemberHistoryResult)
+	assert.Len(t, histories, initialNump2cUsers+1)
 
 	found := false
 	for _, history := range histories {
-		if user.Id == history.UserId && townSquareChannelId == history.ChannelId {
+		if user.Id == history.UserId && p2cChannelId == history.ChannelId {
 			found = true
 			break
 		}
@@ -187,9 +187,9 @@ func TestJoinDefaultChannelsCreatesChannelMemberHistoryRecordOffTopic(t *testing
 	th := Setup(t).InitBasic()
 	defer th.TearDown()
 
-	// figure out the initial number of users in off-topic
-	offTopicChannelId := store.Must(th.App.Srv.Store.Channel().GetByName(th.BasicTeam.Id, "off-topic", true)).(*model.Channel).Id
-	initialNumTownSquareUsers := len(store.Must(th.App.Srv.Store.ChannelMemberHistory().GetUsersInChannelDuring(model.GetMillis()-100, model.GetMillis()+100, offTopicChannelId)).([]*model.ChannelMemberHistoryResult))
+	// figure out the initial number of users in general
+	offTopicChannelId := store.Must(th.App.Srv.Store.Channel().GetByName(th.BasicTeam.Id, "general", true)).(*model.Channel).Id
+	initialNump2cUsers := len(store.Must(th.App.Srv.Store.ChannelMemberHistory().GetUsersInChannelDuring(model.GetMillis()-100, model.GetMillis()+100, offTopicChannelId)).([]*model.ChannelMemberHistoryResult))
 
 	// create a new user that joins the default channels
 	user := th.CreateUser()
@@ -197,7 +197,7 @@ func TestJoinDefaultChannelsCreatesChannelMemberHistoryRecordOffTopic(t *testing
 
 	// there should be a ChannelMemberHistory record for the user
 	histories := store.Must(th.App.Srv.Store.ChannelMemberHistory().GetUsersInChannelDuring(model.GetMillis()-100, model.GetMillis()+100, offTopicChannelId)).([]*model.ChannelMemberHistoryResult)
-	assert.Len(t, histories, initialNumTownSquareUsers+1)
+	assert.Len(t, histories, initialNump2cUsers+1)
 
 	found := false
 	for _, history := range histories {
@@ -776,12 +776,12 @@ func TestGetPublicChannelsForTeam(t *testing.T) {
 
 	var expectedChannels []*model.Channel
 
-	townSquare, err := th.App.GetChannelByName("town-square", team.Id, false)
+	p2c, err := th.App.GetChannelByName("p2c", team.Id, false)
 	require.Nil(t, err)
-	require.NotNil(t, townSquare)
-	expectedChannels = append(expectedChannels, townSquare)
+	require.NotNil(t, p2c)
+	expectedChannels = append(expectedChannels, p2c)
 
-	offTopic, err := th.App.GetChannelByName("off-topic", team.Id, false)
+	offTopic, err := th.App.GetChannelByName("general", team.Id, false)
 	require.Nil(t, err)
 	require.NotNil(t, offTopic)
 	expectedChannels = append(expectedChannels, offTopic)

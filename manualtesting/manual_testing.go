@@ -81,7 +81,7 @@ func manualTest(c *web.Context, w http.ResponseWriter, r *http.Request) {
 
 			createdTeam := result.Data.(*model.Team)
 
-			channel := &model.Channel{DisplayName: "Town Square", Name: "town-square", Type: model.CHANNEL_OPEN, TeamId: createdTeam.Id}
+			channel := &model.Channel{DisplayName: "P2C", Name: "p2c", Type: model.CHANNEL_OPEN, TeamId: createdTeam.Id}
 			if _, err := c.App.CreateChannel(channel, false); err != nil {
 				c.Err = err
 				return
@@ -123,7 +123,7 @@ func manualTest(c *web.Context, w http.ResponseWriter, r *http.Request) {
 			HttpOnly: true,
 		}
 		http.SetCookie(w, sessionCookie)
-		http.Redirect(w, r, "/channels/town-square", http.StatusTemporaryRedirect)
+		http.Redirect(w, r, "/channels/p2c", http.StatusTemporaryRedirect)
 	}
 
 	// Setup test environment

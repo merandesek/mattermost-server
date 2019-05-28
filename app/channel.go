@@ -17,19 +17,19 @@ import (
 )
 
 func (a *App) CreateDefaultChannels(teamId string) ([]*model.Channel, *model.AppError) {
-	townSquare := &model.Channel{DisplayName: utils.T("api.channel.create_default_channels.town_square"), Name: "town-square", Type: model.CHANNEL_OPEN, TeamId: teamId}
+	p2c := &model.Channel{DisplayName: utils.T("api.channel.create_default_channels.town_square"), Name: "p2c", Type: model.CHANNEL_OPEN, TeamId: teamId}
 
-	if _, err := a.CreateChannel(townSquare, false); err != nil {
+	if _, err := a.CreateChannel(p2c, false); err != nil {
 		return nil, err
 	}
 
-	offTopic := &model.Channel{DisplayName: utils.T("api.channel.create_default_channels.off_topic"), Name: "off-topic", Type: model.CHANNEL_OPEN, TeamId: teamId}
+	offTopic := &model.Channel{DisplayName: utils.T("api.channel.create_default_channels.off_topic"), Name: "general", Type: model.CHANNEL_OPEN, TeamId: teamId}
 
 	if _, err := a.CreateChannel(offTopic, false); err != nil {
 		return nil, err
 	}
 
-	channels := []*model.Channel{townSquare, offTopic}
+	channels := []*model.Channel{p2c, offTopic}
 	return channels, nil
 }
 
@@ -43,10 +43,10 @@ func (a *App) JoinDefaultChannels(teamId string, user *model.User, shouldBeAdmin
 		requestor = u.Data.(*model.User)
 	}
 
-	defaultChannelList := []string{"town-square"}
+	defaultChannelList := []string{"p2c"}
 
 	if len(a.Config().TeamSettings.ExperimentalDefaultChannels) == 0 {
-		defaultChannelList = append(defaultChannelList, "off-topic")
+		defaultChannelList = append(defaultChannelList, "general")
 	} else {
 		seenChannels := map[string]bool{}
 		for _, channelName := range a.Config().TeamSettings.ExperimentalDefaultChannels {
